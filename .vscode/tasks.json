@@ -1,0 +1,139 @@
+{
+    // See https://go.microsoft.com/fwlink/?LinkId=733558
+    // for the documentation about the tasks.json format
+    "version": "2.0.0",
+    "tasks":
+    [
+		{
+			"label": "cmake clean",
+			"command": "cmake",
+			"args":
+            [
+				"--build",
+				"${command:cmake.getLaunchTargetDirectory}",
+				"--target",
+				"clean",
+			],
+			"group":
+            {
+				"kind": "build",
+				"isDefault": false
+			},
+            "options":
+            {
+				"cwd": "${workspaceFolder}"
+			},
+		},
+		{
+			"label": "cmake build",
+			"command": "cmake",
+			"args":
+            [
+				"--build",
+				"${command:cmake.getLaunchTargetDirectory}",
+			],
+			"group":
+            {
+				"kind": "build",
+				"isDefault": true
+			},
+            "options":
+            {
+				"cwd": "${workspaceFolder}"
+			},
+		},
+		{
+			"label": "cmake rebuild",
+			"group":
+            {
+				"kind": "build",
+				"isDefault": false
+			},
+			"dependsOrder": "sequence",
+			"dependsOn": ["cmake clean", "cmake build"],
+            "options":
+            {
+				"cwd": "${workspaceFolder}"
+			},
+		},
+		{
+			"label": "openocd download",
+            "type": "shell",
+			"command": "openocd",
+			"args":
+            [
+				"-f",
+				"interface/stlink-dap.cfg",
+				"-f",
+				"target/stm32f1x.cfg",
+				"-c",
+				"program build/Debug/${command:cmake.getLaunchTargetFilename} verify reset exit"
+			],
+			"group":
+            {
+				"kind": "none",
+				"isDefault": false
+			},
+			"dependsOn": "cmake build",
+            "options":
+            {
+				"cwd": "${workspaceFolder}"
+			},
+            "problemMatcher": [],
+		},
+		{
+			"label": "openocd reset",
+            "type": "shell",
+			"command": "openocd",
+			"args":
+            [
+				"-f",
+				"interface/stlink-dap.cfg",
+				"-f",
+				"target/stm32f1x.cfg",
+				"-c",
+				"init; reset; exit"
+			],
+			"group":
+            {
+				"kind": "none",
+				"isDefault": false
+			},
+            "options":
+            {
+				"cwd": "${workspaceFolder}"
+			},
+            "problemMatcher": [],
+		},
+		{
+			"label": "pvs add header",
+            "type": "shell",
+			"command": ".\\pvs_add_header.ps1",
+			"group":
+            {
+				"kind": "none",
+				"isDefault": false
+			},
+            "options":
+            {
+				"cwd": "${workspaceFolder}"
+			},
+			"problemMatcher": [],
+		},
+		{
+			"label": "pvs remove header",
+            "type": "shell",
+			"command": ".\\pvs_remove_header.ps1",
+			"group":
+            {
+				"kind": "none",
+				"isDefault": false
+			},
+            "options":
+            {
+				"cwd": "${workspaceFolder}"
+			},
+			"problemMatcher": [],
+		},
+    ]
+}
