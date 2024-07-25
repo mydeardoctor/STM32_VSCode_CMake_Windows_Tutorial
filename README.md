@@ -267,7 +267,7 @@ CMake is a build system that can use different generators to build a project. A 
             "hidden": true,
             "generator": "MinGW Makefiles",
             "binaryDir": "${sourceDir}/build/${presetName}",
-		    "toolchainFile": "${sourceDir}/cmake/gcc-arm-none-eabi.cmake",
+            "toolchainFile": "${sourceDir}/cmake/gcc-arm-none-eabi.cmake",
             "cacheVariables": {
             }
         },
@@ -340,6 +340,7 @@ Create a new folder ".vscode". Inside it create a "tasks.json" file with these c
             {
                 "cwd": "${workspaceFolder}"
             },
+            "problemMatcher": "$gcc"
         },
         {
             "label": "cmake build",
@@ -358,6 +359,7 @@ Create a new folder ".vscode". Inside it create a "tasks.json" file with these c
             {
                 "cwd": "${workspaceFolder}"
             },
+            "problemMatcher": "$gcc"
         },
         {
             "label": "cmake rebuild",
@@ -372,6 +374,7 @@ Create a new folder ".vscode". Inside it create a "tasks.json" file with these c
             {
                 "cwd": "${workspaceFolder}"
             },
+            "problemMatcher": "$gcc"
         },
     ]
 }
